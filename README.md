@@ -52,6 +52,6 @@
    ```bash
    allure serve .\tests\allure-results
 
-### Пример отчета Allure
+### Отчет Allure
 ![img.png](img.png)
 ![img_1.png](img_1.png)
