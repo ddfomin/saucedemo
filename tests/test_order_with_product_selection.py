@@ -1,4 +1,6 @@
 import allure
+import pytest
+
 from pages.cart_page import CartPage
 from pages.confirmation_page import ConfirmationPage
 from pages.main_page import MainPage
@@ -16,7 +18,7 @@ def _verify_product_match(product_name, product_price, page_name, actual_name, a
         f"Ошибка на форме '{page_name}': цена не совпадает. " \
         f"Ожидалось: '{product_price}', Получено: '{actual_price}'"
 
-
+@pytest.mark.skip(reason="Временно отключён — необходимы правки, так как нужно руками вводить номер товара")
 @allure.title("Тест покупки выбранного товара")
 @allure.description(
     "Тест проверяет полный цикл покупки товара: выбор, добавление в корзину, оформление, проверка и завершение")
