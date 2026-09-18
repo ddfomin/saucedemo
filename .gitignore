@@ -9,6 +9,7 @@ venv/
 .venv/
 ENV/
 .env
+debug.py
 
 # IDE
 .idea/
