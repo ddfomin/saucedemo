@@ -2,6 +2,7 @@ import allure
 from selenium.common import TimeoutException
 from locators.confirmation_page_locators import ConfirmationPageLocators
 from pages.base_page import BasePage
+from decimal import Decimal
 
 
 class ConfirmationPage(BasePage):
@@ -88,15 +89,18 @@ class ConfirmationPage(BasePage):
 
         with allure.step("Получение и проверка итоговой суммы"):
             total_price_text = self.element_is_visible(self.locators.TOTAL_PRICE).text
-            total_price = float(total_price_text.split("$")[1])
+            total_price = Decimal(total_price_text.split("$")[1].strip())
 
-            price1_float = float(price1.strip("$"))
-            price2_float = float(price2.strip("$"))
+            price1_dec = Decimal(price1.strip("$").strip())
+            price2_dec = Decimal(price2.strip("$").strip())
 
-            expected_total = round(price1_float + price2_float, 2)
+            expected_total = price1_dec + price2_dec
 
             if expected_total != total_price:
-                error_msg = f"Сумма не совпадает. {price1_float} + {price2_float} = {expected_total}, итого: {total_price}"
+                error_msg = (
+                    f"Сумма не совпадает. {price1_dec} + {price2_dec} = "
+                    f"{expected_total}, итого: {total_price}"
+                )
                 allure.attach(
                     error_msg,
                     name="price_mismatch",
@@ -107,7 +111,8 @@ class ConfirmationPage(BasePage):
         self.logger.info(f"Товары: 1) {name1} ({price1}), 2) {name2} ({price2})")
 
         allure.attach(
-            f"Товар 1: {name1} ({price1})\nТовар 2: {name2} ({price2})\nИтоговая сумма: ${total_price}",
+            f"Товар 1: {name1} ({price1})\nТовар 2: {name2} ({price2})\n"
+            f"Итоговая сумма: ${total_price}",
             name="order_summary_two_items",
             attachment_type=allure.attachment_type.TEXT
         )
