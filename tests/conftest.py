@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from utils.logger import get_logger
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def driver():
     options = Options()
     prefs = {
@@ -32,16 +32,8 @@ def driver():
     driver.quit()
 
 @pytest.fixture(scope="function")
-def valid_users_list():
-    users_list = ["standard_user", "problem_user", "performance_glitch_user", "error_user", "visual_user"]
-    return users_list
-
-@pytest.fixture(scope="function")
-def locked_user():
-    return "locked_out_user"
-
-@pytest.fixture(scope="function")
 def password():
+    """Общий пароль для всех пользователей"""
     return "secret_sauce"
 
 @pytest.fixture(scope="function")
