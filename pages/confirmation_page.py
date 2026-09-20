@@ -89,12 +89,12 @@ class ConfirmationPage(BasePage):
 
         with allure.step("Получение и проверка итоговой суммы"):
             total_price_text = self.element_is_visible(self.locators.TOTAL_PRICE).text
-            total_price = Decimal(total_price_text.split("$")[1].strip())
+            total_price = Decimal(total_price_text.split("$")[1].strip()).quantize(Decimal("0.01"))
 
-            price1_dec = Decimal(price1.strip("$").strip())
-            price2_dec = Decimal(price2.strip("$").strip())
+            price1_dec = Decimal(price1.strip("$").strip()).quantize(Decimal("0.01"))
+            price2_dec = Decimal(price2.strip("$").strip()).quantize(Decimal("0.01"))
 
-            expected_total = price1_dec + price2_dec
+            expected_total = (price1_dec + price2_dec).quantize(Decimal("0.01"))
 
             if expected_total != total_price:
                 error_msg = (
