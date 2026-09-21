@@ -57,7 +57,3 @@
 7. Открытие отчета:
    ```bash
    allure serve .\tests\allure-results
-
-### Отчет Allure
-![img.png](img.png)
-![img_1.png](img_1.png)
